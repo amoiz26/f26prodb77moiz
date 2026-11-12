@@ -1,0 +1,22 @@
+
+extends layout
+
+block content
+  h1 Products from MongoDB
+  p Web Apps Assignment 11
+
+  if products.length
+    table(border="1" cellpadding="10")
+      thead
+        tr
+          th Product Name
+          th Price
+          th Category
+      tbody
+        each product in products
+          tr
+            td= product.name
+            td= '$' + product.price
+            td= product.category
+  else
+    p No products found.

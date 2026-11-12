@@ -4,8 +4,22 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// MongoDB Atlas connection
+require('dotenv').config();
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_CON)
+  .then(() => {
+    console.log('MongoDB Atlas connected successfully!');
+  })
+  .catch((error) => {
+    console.error('MongoDB connection failed:', error.message);
+  });
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const productsRouter = require('./routes/products');
+const resourceRouter = require('./routes/resource');
 
 var app = express();
 
@@ -21,6 +35,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/api/products', productsRouter);
+app.use('/products', productsRouter);
+app.use('/resource', resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

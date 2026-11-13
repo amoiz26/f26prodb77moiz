@@ -20,4 +20,25 @@ router.get('/products', async function(req, res) {
   }
 });
 
+
+ // GET one product by ID (Lab 12 Part 1)
+router.get('/products/:id', async function(req, res) {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (!product) {
+            return res.status(404).json({
+                error: "Product not found"
+            });
+        }
+
+        res.json(product);
+    } catch (error) {
+        res.status(500).json({
+            error: "Product for ID " + req.params.id + " not found"
+        });
+    }
+});
+
+
 module.exports = router;

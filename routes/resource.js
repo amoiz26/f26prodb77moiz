@@ -41,4 +41,39 @@ router.get('/products/:id', async function(req, res) {
 });
 
 
+ // PUT update one product by ID (Lab 12 Part 2)
+router.put('/products/:id', async function(req, res) {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (!product) {
+            return res.status(404).json({
+                error: "Product not found"
+            });
+        }
+
+        if (req.body.name !== undefined) {
+            product.name = req.body.name;
+        }
+
+        if (req.body.price !== undefined) {
+            product.price = req.body.price;
+        }
+
+        if (req.body.category !== undefined) {
+            product.category = req.body.category;
+        }
+
+        const updatedProduct = await product.save();
+
+        res.json(updatedProduct);
+    } catch (error) {
+        res.status(500).json({
+            error: error.message
+        });
+    }
+});
+
+
+
 module.exports = router;

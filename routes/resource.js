@@ -75,5 +75,24 @@ router.put('/products/:id', async function(req, res) {
 });
 
 
+ // DELETE one product by ID (Lab 12 Part 3)
+router.delete('/products/:id', async function(req, res) {
+    try {
+        const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+
+        if (!deletedProduct) {
+            return res.status(404).json({
+                error: "Product not found"
+            });
+        }
+
+        res.json(deletedProduct);
+    } catch (error) {
+        res.status(500).json({
+            error: error.message
+        });
+    }
+});
+
 
 module.exports = router;

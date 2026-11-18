@@ -92,4 +92,46 @@ router.post('/create', async function(req, res) {
 });
 
 
+ // Lab 12 - Show Update Product form
+router.get('/update/:id', async function(req, res) {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (!product) {
+            return res.status(404).send('Product not found');
+        }
+
+        res.render('product_update', {
+            title: 'Update Product',
+            product: product
+        });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+// Lab 12 - Save updated product
+router.post('/update/:id', async function(req, res) {
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(
+            req.params.id,
+            {
+                name: req.body.name,
+                price: req.body.price,
+                category: req.body.category
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).send('Product not found');
+        }
+
+        res.redirect('/products/detail/' + updatedProduct._id);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+
 module.exports = router;

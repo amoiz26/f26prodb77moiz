@@ -95,4 +95,24 @@ router.delete('/products/:id', async function(req, res) {
 });
 
 
+ // POST create a new product
+router.post('/products', async function(req, res) {
+    try {
+        const product = new Product({
+            name: req.body.name,
+            price: req.body.price,
+            category: req.body.category
+        });
+
+        const savedProduct = await product.save();
+        res.status(201).json(savedProduct);
+
+    } catch (error) {
+        res.status(500).json({
+            error: error.message
+        });
+    }
+});
+
+
 module.exports = router;

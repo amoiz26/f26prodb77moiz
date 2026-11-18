@@ -1,0 +1,28 @@
+
+extends layout
+
+block content
+  h1 Product Details
+
+  if product
+    h2= product.name
+
+    p
+      strong Product ID:
+      |  #{product._id}
+
+    p
+      strong Name:
+      |  #{product.name}
+
+    p
+      strong Price:
+      |  $#{product.price}
+
+    p
+      strong Category:
+      |  #{product.category}
+
+    a(href='/products/view') Back to All Products
+  else
+    p Product not found.

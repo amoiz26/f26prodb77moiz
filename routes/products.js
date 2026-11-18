@@ -49,4 +49,23 @@ router.post('/', async (req, res) => {
 });
 
 
+ // Lab 12 - Display details of one product
+router.get('/detail/:id', async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (!product) {
+            return res.status(404).send('Product not found');
+        }
+
+        res.render('product_detail', {
+            title: 'Product Details',
+            product: product
+        });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+
 module.exports = router;

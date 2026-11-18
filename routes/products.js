@@ -68,4 +68,28 @@ router.get('/detail/:id', async (req, res) => {
 });
 
 
+ // Lab 12 - Show Create Product form
+router.get('/create', function(req, res) {
+    res.render('product_create', {
+        title: 'Create Product'
+    });
+});
+
+// Lab 12 - Save product from Create form
+router.post('/create', async function(req, res) {
+    try {
+        const newProduct = new Product({
+            name: req.body.name,
+            price: req.body.price,
+            category: req.body.category
+        });
+
+        await newProduct.save();
+        res.redirect('/products/detail/' + newProduct._id);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+
 module.exports = router;

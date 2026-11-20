@@ -3,7 +3,7 @@ extends layout
 
 block content
   h1 Products from MongoDB
-  p Web Apps Assignment 12
+  p Web Apps Assignment 13
 
   if products.length
     table(border="1" cellpadding="10")
@@ -12,11 +12,14 @@ block content
           th Product Name
           th Price
           th Category
+          th Action
       tbody
         each product in products
           tr
             td= product.name
             td= '$' + product.price
             td= product.category
+            td
+              a.btn.btn-primary(href='/products/update/' + product._id) Update
   else
     p No products found.
